@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.2.0",
-    "vue": "^3.2.45"
+    "sass": "^1.57.1",
+    "vite-plugin-vuetify": "^1.0.1",
+    "vue": "^3.2.45",
+    "vuetify": "^2.6.13"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",
