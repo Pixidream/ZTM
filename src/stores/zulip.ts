@@ -11,7 +11,7 @@ export const useZulipStore = defineStore("zulip", {
       realm: "",
       apiKey: "",
       zulip: undefined,
-      error: undefined,
+      error: undefined as unknown,
       loading: false
     };
   },
@@ -37,9 +37,9 @@ export const useZulipStore = defineStore("zulip", {
     },
 
     async autoLogin() {
-      this.apiKey = localStorage.getItem("apiKey")
-      this.realm = localStorage.getItem("realm")
-      this.username = localStorage.getItem("username")
+      this.apiKey = localStorage.getItem("apiKey") || ""
+      this.realm = localStorage.getItem("realm") || ""
+      this.username = localStorage.getItem("username") || ""
 
       if (!this.apiKey || !this.realm || !this.username) return
 
