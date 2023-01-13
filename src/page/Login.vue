@@ -1,7 +1,7 @@
 <template lang="pug">
 .d-flex.justify-center.align-center.h-screen.w-100.flex-column
   img.my-5(:src="Ticket" height="100")
-  v-card.w-50(:loading="loading")
+  v-card.w-50(:loading="zulipStore.loading")
     v-card-title.text-center Login to Zulip
     v-card-text
       v-form(
@@ -11,7 +11,7 @@
       )
         v-text-field(
           ref="realmRef"
-          v-model="realm"
+          v-model="zulipStore.realm"
           :rules="realmRule"
           label="Organization URL"
           required
@@ -20,7 +20,7 @@
         )
         v-text-field(
           ref="usernameRef"
-          v-model="username"
+          v-model="zulipStore.username"
           :rules="usernameRule"
           label="Username"
           required
@@ -28,7 +28,7 @@
         )
         v-text-field(
           ref="passwordRef"
-          v-model="password"
+          v-model="zulipStore.password"
           :rules="passwordRule"
           label="Password"
           required
@@ -40,7 +40,7 @@
           color="primary"
           @click="submit()"
           :disabled="!isFormValid"
-          :loading="loading"
+          :loading="zulipStore.loading"
         ) Login
 
   v-snackbar(
@@ -57,10 +57,6 @@ import Ticket from "../assets/img/ticket.svg"
 import { useZulipStore } from '../stores/zulip';
 
 const isFormValid = ref(false)
-const username = ref("")
-const password = ref("")
-const realm = ref("")
-const loading = ref(false)
 const zulipStore = useZulipStore()
 const snackbar = ref(false)
 const errorTimeout = 2000
@@ -79,21 +75,13 @@ const realmRule = [
 ]
 
 const checkHttps = () => {
-  if (!/https?:\/\/[\S]*/.test(realm.value)) {
-    realm.value = `https://${realm.value}`
+  if (!/https?:\/\/[\S]*/.test(zulipStore.realm)) {
+    zulipStore.realm = `https://${zulipStore.realm}`
   }
 }
 
 const submit = () => {
-  loading.value = true
-  zulipStore.$patch({
-    username,
-    password,
-    realm
-  })
-
   zulipStore.login()
-  loading.value = false
 
   if (zulipStore.error) {
     snackbar.value = true

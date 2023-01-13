@@ -1,8 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { useZulipStore } from "../stores/zulip.ts";
+import { useZulipStore } from "../stores/zulip";
 
 const Login = () => import("../page/Login.vue");
-const routes = [{ path: "/login", component: Login, name: "login" }];
+const Home = () => import("../page/Home.vue")
+
+const routes = [
+  { path: "/login", component: Login, name: "login" },
+  { path: "/", component: Home, name: 'home' }
+];
 
 export const router = createRouter({
   history: createWebHistory(),
