@@ -1,4 +1,7 @@
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
+import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css'
+import { createVuetify } from 'vuetify'
 
-export const vuetifyPlugin = createVuetify({ theme: { defaultTheme: "dark" } });
+export const vuetifyPlugin = createVuetify({
+  theme: { defaultTheme: 'dark' },
+})

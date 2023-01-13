@@ -1,5 +1,5 @@
 <template lang="pug">
-.d-flex.justify-center.align-center.h-screen.w-100.flex-column
+v-container.d-flex.justify-center.align-center.h-screen.w-100.flex-column(fluid)
   img.my-5(:src="Ticket" height="100")
   v-card.w-50(:loading="zulipStore.loading")
     v-card-title.text-center Login to Zulip
@@ -51,10 +51,10 @@
   ) {{ zulipStore.error }}
 </template>
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
-import Ticket from "../assets/img/ticket.svg"
-import { useZulipStore } from '../stores/zulip';
+import Ticket from '../assets/img/ticket.svg'
+import { useZulipStore } from '../stores/zulip'
 
 const isFormValid = ref(false)
 const zulipStore = useZulipStore()
@@ -64,15 +64,9 @@ const usernameRef = ref(null)
 const realmRef = ref(null)
 const passwordRef = ref(null)
 
-const usernameRule = [
-  (v: string) => !!v || 'Username is required'
-]
-const passwordRule = [
-  (v: string) => !!v || 'Password is required'
-]
-const realmRule = [
-  (v: string) => !!v || 'Organization URL is required',
-]
+const usernameRule = [(v: string) => !!v || 'Username is required']
+const passwordRule = [(v: string) => !!v || 'Password is required']
+const realmRule = [(v: string) => !!v || 'Organization URL is required']
 
 const checkHttps = () => {
   if (!/https?:\/\/[\S]*/.test(zulipStore.realm)) {
