@@ -12,17 +12,18 @@
   "dependencies": {
     "@mdi/font": "^7.1.96",
     "@tauri-apps/api": "^1.2.0",
-    "pinia": "^2.0.28",
+    "buffer": "^6.0.3",
+    "pinia": "^2.0.29",
     "pug": "^3.0.2",
     "sass": "^1.57.1",
     "vite-plugin-vuetify": "^1.0.1",
     "vue": "^3.2.45",
-    "vue-router": "4",
-    "vuetify": "^3.1.1",
+    "vue-router": "4.1.6",
+    "vuetify": "^3.1.2",
     "zulip-js": "^2.0.9"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.2.2",
+    "@tauri-apps/cli": "^1.2.3",
     "@types/node": "^18.11.18",
     "@vitejs/plugin-vue": "^4.0.0",
     "@volar/pug-language-service": "^1.0.24",

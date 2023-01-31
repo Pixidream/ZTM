@@ -6,7 +6,7 @@ import { router } from '../routes'
 export const useZulipStore = defineStore('zulip', {
   state: () => {
     return {
-      username: '',
+      email: '',
       password: '',
       realm: '',
       apiKey: '',
@@ -21,15 +21,18 @@ export const useZulipStore = defineStore('zulip', {
       this.loading = true
       try {
         this.zulip = await zulipInit({
-          username: this.username,
+          username: this.email,
           password: this.password,
           realm: this.realm,
         })
         this.apiKey = this.zulip.config.apiKey
         localStorage.setItem('apiKey', this.apiKey)
         localStorage.setItem('realm', this.realm)
-        localStorage.setItem('username', this.username)
+        localStorage.setItem('email', this.email)
         router.push({ name: 'home' })
+        this.email = ''
+        this.password = ''
+        this.realm = ''
         this.loading = false
       } catch (e) {
         this.error = e
@@ -40,13 +43,13 @@ export const useZulipStore = defineStore('zulip', {
     async autoLogin() {
       this.apiKey = localStorage.getItem('apiKey') || ''
       this.realm = localStorage.getItem('realm') || ''
-      this.username = localStorage.getItem('username') || ''
+      this.email = localStorage.getItem('email') || ''
 
-      if (!this.apiKey || !this.realm || !this.username) return
+      if (!this.apiKey || !this.realm || !this.email) return
 
       try {
         this.zulip = await zulipInit({
-          username: this.username,
+          username: this.email,
           apiKey: this.apiKey,
           realm: this.realm,
         })
@@ -57,24 +60,27 @@ export const useZulipStore = defineStore('zulip', {
     },
 
     logout() {
-      this.username = ''
+      this.email = ''
       this.password = ''
       this.realm = ''
       this.apiKey = ''
       this.zulip = undefined
+      localStorage.removeItem('apiKey')
+      localStorage.removeItem('realm')
+      localStorage.removeItem('username')
       router.push({ name: 'login' })
     },
 
-    async getSubscribedStreams() {
+    async updateSubscribedStreams() {
       if (this.zulip === undefined) return
-
-      this.streams = await this.zulip.streams.subscriptions.retrieve()
-      return this.streams
+      const streams = await this.zulip.streams.subscriptions.retrieve()
+      this.streams = streams.subscriptions.filter((stream: any) => stream.name.includes('_sav'))
     },
   },
 
   getters: {
     getError: (state) => state.error,
-    isAuthenticated: (state) => !!state.realm && !!state.username && !!state.apiKey,
+    isAuthenticated: (state) => !!state.apiKey && !!state.zulip,
+    getStreams: (state) => state.streams,
   },
 })

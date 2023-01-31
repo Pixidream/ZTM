@@ -6,9 +6,12 @@ v-app
             template(v-slot:append)
                 .pa-6
                     v-btn(block color="primary" @click="zulipStore.logout()") Logout
-        v-navigation-drawer(width="160" permanent)
+                    v-btn(block color="green" @click="zulipStore.updateSubscribedStreams()") Refresh streams
         v-main
-            router-view
+            Suspense
+                router-view
+                template(#fallback)
+                    h1 Loading ....
 </template>
 <script lang="ts" setup>
 import StreamListDrawer from '../components/app/StreamListDrawer.vue'

@@ -19,11 +19,12 @@ v-container.d-flex.justify-center.align-center.h-screen.w-100.flex-column(fluid)
           @keyup.enter="usernameRef.focus()"
         )
         v-text-field(
-          ref="usernameRef"
-          v-model="zulipStore.username"
-          :rules="usernameRule"
-          label="Username"
+          ref="emailRef"
+          v-model="zulipStore.email"
+          :rules="emailRule"
+          label="Email"
           required
+          type="email"
           @keyup.enter="passwordRef.focus()"
         )
         v-text-field(
@@ -60,11 +61,14 @@ const isFormValid = ref(false)
 const zulipStore = useZulipStore()
 const snackbar = ref(false)
 const errorTimeout = 2000
-const usernameRef = ref(null)
+const emailRef = ref(null)
 const realmRef = ref(null)
 const passwordRef = ref(null)
 
-const usernameRule = [(v: string) => !!v || 'Username is required']
+const emailRule = [
+  (v: string) => !!v || 'Email is required',
+  (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || 'Please enter a valid email address',
+]
 const passwordRule = [(v: string) => !!v || 'Password is required']
 const realmRule = [(v: string) => !!v || 'Organization URL is required']
 
