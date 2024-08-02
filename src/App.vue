@@ -11,7 +11,6 @@ import LoginLayout from './layouts/LoginLayout.vue'
 import { useZulipStore } from './stores/zulip'
 
 const zulipStore = useZulipStore()
-const route = useRoute()
 
 onMounted(() => {
   zulipStore.autoLogin()
